@@ -1,0 +1,2 @@
+use edureka_572865;
+ select a.id, a.name from airlines a JOIN routes b ON a.id=b.id where codeshare='Y' group by a.id, a.name;

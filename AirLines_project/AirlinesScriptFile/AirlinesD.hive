@@ -1,0 +1,2 @@
+use edureka_572865;
+select name, COUNT(*) as cn from airports_mod group by name order by cn DESC limit 1;

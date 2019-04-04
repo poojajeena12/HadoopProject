@@ -1,0 +1,49 @@
+
+create table airlines (
+id int,                                         
+name string,                                      
+alias string,                                      
+iata_code string,                                     
+icao_code string,                                      
+callsign string,                                      
+country string,                                      
+active string)
+row format delimited
+fields terminated by ',';
+
+load data local inpath 'edureka_project/Airlines_dataset/Final_airlines' into table airlines;
+
+
+create table airport_mod (
+id int,                                         
+name string,                                      
+city string,                                      
+country string,                                      
+iata string,                                      
+icao string,                                      
+latitude float,                                       
+longitude float,                                       
+altitude float,                                       
+timezone float,                                       
+dst string,                                      
+zone string)    
+row format delimited
+fields terminated by ',';
+
+load data local inpath 'edureka_project/Airlines_dataset/airports_mod.dat' into table airports_mod;
+
+
+create table routes (
+code string, 
+id int, 
+src_aircode string,                             
+src_airid int,                                         
+dest_aircode string,                                      
+dest_airid int,                                         
+codeshare string,                                      
+stops int,                                         
+equip string)
+row format delimited
+fields terminated by ',';  
+
+load data local inpath 'edureka_project/Airlines_dataset/routes.dat' into table routes;

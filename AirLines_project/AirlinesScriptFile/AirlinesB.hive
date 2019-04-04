@@ -1,0 +1,2 @@
+use edureka_572865;
+select a.id, a.name from airlines a INNER JOIN routes b ON a.id=b.id where b.stops=0 group by a.id, a.name;

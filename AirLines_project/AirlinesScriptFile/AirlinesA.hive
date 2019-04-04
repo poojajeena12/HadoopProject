@@ -1,0 +1,2 @@
+use edureka_572865;
+select a.name, a.city, a.country, b.active from airports_mod a JOIN airlines b ON a.id=b.id where a.country ='India';
