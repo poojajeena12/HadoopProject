@@ -1,0 +1,82 @@
+
+create table posts (id int,                                         
+post_type int,                                         
+create_date string,                                      
+score int,                                         
+view bigint,                                      
+owner_id int,                                         
+title string,                                      
+answer_count int,                                         
+comment_count int)
+row format delimited
+fields terminated by ',';        
+
+
+load data local inpath 'edureka_project/Stack_dataset/posts.csv' into table posts;
+
+
+create table users (id bigint,                                      
+repo int,                                         
+name string,                                      
+loc string,                                      
+age int)  
+row format delimited
+fields terminated by ',';
+
+load data local inpath 'edureka_project/Stack_dataset/users.csv' into table users;
+
+
+create table posttypes (id int,                                         
+name string)
+row format delimited
+fields terminated by ',';
+
+load data local inpath 'edureka_project/Stack_dataset/posttypes.csv' into table posttypes;
+
+
+create table comments (id bigint,                                      
+user_id bigint)
+row format delimited
+fields terminated by ',';
+
+load data local inpath 'edureka_project/Stack_dataset/comments.csv' into table comments;
+
+
+*******************************************************************************************************************************************
+
+A.Find the display name and no. of posts created by the user who has got maximum reputation.
+>>select a.owner_id, b.name, MAX(b.repo) as cn, COUNT(*) from posts a JOIN users b ON a.owner_id=b.id  group by a.owner_id, b.name order b
+y cn DESC limit 1;
+
+B.Find the average age of users on the Stack Overflow site.
+>>select AVG(age) from users;
+
+C.Find the display name of user who posted the oldest post on Stack Overflow (in terms of date).
+>>select a.name from users a JOIN posts b ON a.owner_id=b.id group by a.name order by create_date ASC limit 1;
+
+D.Find the display name and no. of comments done by the user who has got maximum reputation.
+>>select b.name,MAX(b.repo) as cc, COUNT(a.id) from posts a JOIN users b ON a.owner_id=b.id group by b.name order by cc DESC limit 4
+
+E.Find the display name of user who has created maximum no. of posts on Stack Overflow.
+>> select b.name, COUNT(a.id) as posts_created from posts a JOIN users b ON a.owner_id=b.id group by b.name order by posts_created DESC limit 1;
+
+F.Find the display name of user who has commented maximum no. of posts on Stack Overflow.
+>>select a.id, b.name, MAX(a.comment_count) as cc from posts a JOIN users b ON b.id=a.owner_id group by a.id, b.name order by cc DESC limit 1;
+
+G.Find the owner name and id of user whose post has got maximum no. of view counts so far.
+>>select a.id, a.name, MAX(b.view) as vc from users a JOIN posts b ON a.id=b.owner_id group by a.id, a.name order by vc DESC limit 1;
+
+H.Find the title and owner name of the post which has maximum number of Answer count.
+>>select a.name, b.title, MAX(b.answer_count) as ac from users a JOIN posts b ON a.id=b.owner_id group by b.title, a.name order by ac DESC
+ limit 1;
+
+I.Find the title and owner name of post who has got maximum no. of Comment count.
+>>select a.name, b.title, MAX(b.comment_count) as cc from users a JOIN posts b ON a.id=b.owner_id group by b.title, a.name order by cc DES
+C limit 1;
+
+J.Find the location which has maximum no of Stack Overflow users.
+>> select loc, MAX(id) as max_user from users group by loc order by max_user DESC limit 1;
+
+K.Find the total no. of answers, posts, comments created by Indian users.
+>>select COUNT(a.answer_count), COUNT(a.owner_id), COUNT(a.comment_count) from posts a JOIN users b ON b.id=a.owner_id where b.loc='India'
+ limit 5;
